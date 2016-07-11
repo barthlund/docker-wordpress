@@ -1,0 +1,45 @@
+#!/bin/bash
+
+: ${WORDPRESS_VERSION:=4.5.3}
+: ${WORDPRESS_SHA1:=835b68748dae5a9d31c059313cd0150f03a49269}
+
+# Install wordpress if it doesn't exist
+if [ ! -f /opt/app-root/src/wordpress/index.php ]; then
+echo "-> Installing wordpress.."
+curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
+      && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
+      && tar -xzf wordpress.tar.gz --no-overwrite-dir -C /opt/app-root/src/ \
+      && rm wordpress.tar.gz \
+      && fix-permissions /opt/app-root/src/wordpress \
+      && chmod -R 0777 /opt/app-root/src/wordpress/wp-content
+fi
+
+# Generate configuration file if it doesn't exist
+if [ ! -f /opt/app-root/src/wordpress/wp-config.php ]; then
+  # Check all required variable
+  [[ -z "${MYSQL_DATABASE}" ]]     && echo "The MYSQL_DATABASE variable must be set." && exit 1
+  [[ -z "${MYSQL_USER}" ]]         && echo "The MYSQL_USER variable must be set." && exit 1
+  [[ -z "${MYSQL_PASSWORD}" ]]     && echo "The MYSQL_PASSWORD variable must be set." && exit 1
+  [[ -z "${DATABASE_SERVICE_NAME}" ]] && echo "The DATABASE_SERVICE_NAME variable must be set." && exit 1
+  { \
+    echo "<?php";
+    echo "define('DB_NAME',     getenv('MYSQL_DATABASE'));";
+    echo "define('DB_USER',     getenv('MYSQL_USER'));";
+    echo "define('DB_PASSWORD', getenv('MYSQL_PASSWORD'));";
+    echo "define('DB_HOST',     getenv('DATABASE_SERVICE_NAME'));";
+    echo "define('DB_CHARSET',  'utf8');";
+    echo "define('DB_COLLATE',  '');";
+  } > /tmp/wp-config.php
+
+  # Generate unique keys and salts
+  echo "-> Generating unique keys and salts (this will cause all users to logout) ..."
+  curl -s https://api.wordpress.org/secret-key/1.1/salt/ >> /tmp/wp-config.php
+
+  # Completize configuration
+  cat /opt/app-root/src/wp-config.php.template >> /tmp/wp-config.php
+  echo "-> Generated new wp-config.php file ..."
+  mv /tmp/wp-config.php /opt/app-root/src/wordpress/wp-config.php
+fi
+
+echo -e "-> Wordpress is now ready!\n"
+exec ${STI_SCRIPTS_PATH}/run
