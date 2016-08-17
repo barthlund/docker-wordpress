@@ -4,7 +4,7 @@ WordPress Docker Image
 This repository contains Dockerfile to run WordPress on AusNimbus (OpenShift v3).
 
 Note: A volume is created in in the WordPress root directory. This image designed
-to be a quickstart for deploying a fully functional Wordpress installation. 
+to be a quickstart for deploying a fully functional Wordpress installation.
 It is not scalable unless you use a Read+Write+Many storage backend (such as NFS or GlusterFS).
 
 Configuring
@@ -22,7 +22,7 @@ WordPress is installed into the /wordpress sub directory. You change the documen
 setting the DOCUMENTROOT environment variable eg. /wordpress
 
 You can define the your WordPress version by setting the ENV variables.
-The default WordPress version is 4.5.3
+The default WordPress version is 4.6
 
 - WORDPRESS_VERSION
 - WORDPRESS_SHA1 (the sha1sum of the upstream .tar.gz)
