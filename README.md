@@ -22,7 +22,7 @@ WordPress is installed into the /wordpress sub directory. You change the documen
 setting the DOCUMENTROOT environment variable eg. /wordpress
 
 You can define the your WordPress version by setting the ENV variables.
-The default WordPress version is 4.6
+The default WordPress version is 4.6.1
 
 - WORDPRESS_VERSION
 - WORDPRESS_SHA1 (the sha1sum of the upstream .tar.gz)
