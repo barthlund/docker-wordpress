@@ -27,6 +27,8 @@ The default WordPress version is 4.6.1
 - WORDPRESS_VERSION
 - WORDPRESS_SHA1 (the sha1sum of the upstream .tar.gz)
 
+A healthcheck file is created at /healthcheck.php which can be used for application healthchecks.
+
 Running Locally
 ---------------
 

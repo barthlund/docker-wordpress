@@ -39,6 +39,9 @@ if [ ! -f /opt/app-root/src/wordpress/wp-config.php ]; then
   cat /opt/app-root/src/wp-config.php.template >> /tmp/wp-config.php
   echo "-> Generated new wp-config.php file ..."
   mv /tmp/wp-config.php /opt/app-root/src/wordpress/wp-config.php
+
+  # Create healthcheck file
+  echo '1' > /opt/app-root/src/wordpress/healthcheck.php
 fi
 
 echo -e "-> Wordpress is now ready!\n"
