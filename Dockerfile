@@ -11,16 +11,6 @@ LABEL io.k8s.description="WordPress quickstart deployment. S2I and scaling to mo
 RUN mkdir /opt/app-root/src/wordpress \
       && fix-permissions /opt/app-root/src/wordpress
 
-# Copied from the official Wordpress Docker image
-RUN { \
-      echo 'opcache.memory_consumption=128'; \
-      echo 'opcache.interned_strings_buffer=8'; \
-      echo 'opcache.max_accelerated_files=4000'; \
-      echo 'opcache.revalidate_freq=60'; \
-      echo 'opcache.fast_shutdown=1'; \
-      echo 'opcache.enable_cli=1'; \
-      } > /etc/opt/rh/rh-php56/php.d/11-opcache-wordpress.ini
-
 COPY s2i/bin/* $STI_SCRIPTS_PATH/
 COPY contrib/* /opt/app-root/src/
 
