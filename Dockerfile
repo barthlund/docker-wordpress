@@ -1,4 +1,4 @@
-FROM centos/php-56-centos7
+FROM centos/php-70-centos7
 
 MAINTAINER AusNimbus <support@ausnimbus.com.au>
 
