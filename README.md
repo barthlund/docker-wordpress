@@ -1,6 +1,9 @@
 WordPress Docker Image
 ==================
 
+[![Build Status](https://travis-ci.org/ausnimbus/docker-wordpress.svg?branch=master)](https://travis-ci.org/ausnimbus/docker-wordpress)
+[![Licensed under Apache License version 2.0](https://img.shields.io/github/license/ausnimbus/docker-wordpress.svg?maxAge=2592000)](https://www.apache.org/licenses/LICENSE-2.0)
+
 This repository contains Dockerfile to run WordPress on AusNimbus (OpenShift v3).
 
 Note: A volume is created in in the WordPress root directory. This image designed
