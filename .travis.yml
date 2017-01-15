@@ -1,8 +1,8 @@
----
 sudo: required
-
 services:
-  - docker
-
+- docker
 script:
-  - docker build -t ausnimbus/wordpress:latest .
+- docker build -t ausnimbus/wordpress:latest .
+notifications:
+  slack:
+    secure: r2VQqc7sBmZScpHrx5MI8WbQe5aoqVbZEMe5WWKdvddFO3lmz++BKxsVeBpyjncILOxaX0+3QWX6uYiReUwbnXe4S3pZ31YXPI9MXCxFpRLRStu1pxpbUZ2Q7frX9VP456UvIkwIi3hrMHiJPfzeTYJcIsnzkTjOrxcrEOwhQL2nX2IPvICqPivGWa6Z0oWC4oqQnxwRALGK2eEyODqvgqY5zrtgWpqqBdwRShqET2VichAl3pJpK1xkXYbdOghyMCj0eGTfkXk8GF+6kc6KTDS9fRo5atVbv2JpZGrxNsScYry85PbLUuMEQpbLBTW+VdM76bRXaFKQWU6P27mZjv+R5nNl2f+BvYWHpVTMVaN+rGtlGUCUlCDNAp5Rmkb22YEmwHKtaWoBZkO97Z+tTEVyNP84uYH/yHDasS2s/TUSt8VLdMbrnt7n0iXRQOjjeqxpOXaWF3RxWupcULT5cnoi93XPeOmXm94bFp0mfT2ExFzZvKfWTg5d1T6gYaGNGR3pH49M+lSXzvYs7nRKirW+uclQvLyJEuPJexvEILRzxjt3ZT0V6gGMgAp2HUnoQZkvWztJRiEb0VkKo2obtp/LBKn5ejif1wZah3tyezQwt7Ts6GYSZYSvQ4YyHe+jJc1Ib3Zk0ExYbiJRvPiLDoUYePKHCYaMar/0kWDO/gE=
