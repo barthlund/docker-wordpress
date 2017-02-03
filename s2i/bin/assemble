@@ -4,18 +4,19 @@
 : ${WORDPRESS_SHA1:=7b687f1af589c337124e6247229af209ec1d52c3}
 
 # Install wordpress if it doesn't exist
-if [ ! -f /opt/app-root/src/wordpress/index.php ]; then
+if [ ! -f /opt/app-root/src/index.php ]; then
 echo "-> Installing wordpress.."
 curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
       && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
-      && tar -xzf wordpress.tar.gz --no-overwrite-dir -C /opt/app-root/src/ \
+      && tar --strip-components=1 -zxf wordpress.tar.gz --no-overwrite-dir -C /opt/app-root/src/ \
+      # && tar -xzf wordpress.tar.gz --no-overwrite-dir -C /opt/app-root/src/ \
       && rm wordpress.tar.gz \
-      && fix-permissions /opt/app-root/src/wordpress \
-      && chmod -R 0777 /opt/app-root/src/wordpress/wp-content
+      && fix-permissions /opt/app-root/src \
+      && chmod -R 0777 /opt/app-root/src/wp-content
 fi
 
 # Generate configuration file if it doesn't exist
-if [ ! -f /opt/app-root/src/wordpress/wp-config.php ]; then
+if [ ! -f /opt/app-root/src/wp-config.php ]; then
   # Check all required variable
   [[ -z "${MYSQL_DATABASE}" ]]     && echo "The MYSQL_DATABASE variable must be set." && exit 1
   [[ -z "${MYSQL_USER}" ]]         && echo "The MYSQL_USER variable must be set." && exit 1
@@ -38,10 +39,10 @@ if [ ! -f /opt/app-root/src/wordpress/wp-config.php ]; then
   # Completize configuration
   cat /opt/app-root/src/wp-config.php.template >> /tmp/wp-config.php
   echo "-> Generated new wp-config.php file ..."
-  mv /tmp/wp-config.php /opt/app-root/src/wordpress/wp-config.php
+  mv /tmp/wp-config.php /opt/app-root/src/wp-config.php
 
   # Create healthcheck file
-  echo '1' > /opt/app-root/src/wordpress/healthcheck.php
+  echo '1' > /opt/app-root/src/healthcheck.php
 fi
 
 echo -e "-> Wordpress is now ready!\n"
