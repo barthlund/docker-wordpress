@@ -9,7 +9,6 @@ echo "-> Installing wordpress.."
 curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
       && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
       && tar --strip-components=1 -zxf wordpress.tar.gz --no-overwrite-dir -C /opt/app-root/src/ \
-      # && tar -xzf wordpress.tar.gz --no-overwrite-dir -C /opt/app-root/src/ \
       && rm wordpress.tar.gz \
       && fix-permissions /opt/app-root/src \
       && chmod -R 0777 /opt/app-root/src/wp-content
